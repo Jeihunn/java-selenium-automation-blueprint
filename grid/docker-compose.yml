@@ -1,0 +1,129 @@
+x-common-env: &common-env
+  TZ: Asia/Baku
+
+services:
+  selenium-hub:
+    image: selenium/hub:4.40.0-20260120
+    restart: unless-stopped
+
+    ports:
+      - "4444:4444"
+
+    environment:
+      <<: *common-env
+      SE_ROUTER_USERNAME: "${GRID_USERNAME:?GRID_USERNAME is required}"
+      SE_ROUTER_PASSWORD: "${GRID_PASSWORD:?GRID_PASSWORD is required}"
+      SE_SESSION_REQUEST_TIMEOUT: "300"
+      SE_SESSION_RETRY_INTERVAL: "5"
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -u $$SE_ROUTER_USERNAME:$$SE_ROUTER_PASSWORD -f http://localhost:4444/status || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+    networks:
+      - qa-infra
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  chrome-node:
+    image: selenium/node-chrome:4.40.0-20260120
+    restart: unless-stopped
+    shm_size: 2gb
+    mem_limit: 2g
+    cpus: 2.0
+
+    depends_on:
+      selenium-hub:
+        condition: service_healthy
+
+    environment:
+      <<: *common-env
+      SE_EVENT_BUS_HOST: selenium-hub
+      SE_EVENT_BUS_PUBLISH_PORT: "4442"
+      SE_EVENT_BUS_SUBSCRIBE_PORT: "4443"
+      SE_NODE_MAX_SESSIONS: "1"
+      SE_VNC_NO_PASSWORD: "true"
+      # SE_VNC_PASSWORD: "${GRID_VNC_PASSWORD:-secret}"
+
+    networks:
+      - qa-infra
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  firefox-node:
+    image: selenium/node-firefox:4.40.0-20260120
+    restart: unless-stopped
+    shm_size: 2gb
+    mem_limit: 2g
+    cpus: 2.0
+
+    depends_on:
+      selenium-hub:
+        condition: service_healthy
+
+    environment:
+      <<: *common-env
+      SE_EVENT_BUS_HOST: selenium-hub
+      SE_EVENT_BUS_PUBLISH_PORT: "4442"
+      SE_EVENT_BUS_SUBSCRIBE_PORT: "4443"
+      SE_NODE_MAX_SESSIONS: "1"
+      SE_VNC_NO_PASSWORD: "true"
+      # SE_VNC_PASSWORD: "${GRID_VNC_PASSWORD:-secret}"
+
+    networks:
+      - qa-infra
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  edge-node:
+    image: selenium/node-edge:4.40.0-20260120
+    restart: unless-stopped
+    shm_size: 2gb
+    mem_limit: 2g
+    cpus: 2.0
+
+    depends_on:
+      selenium-hub:
+        condition: service_healthy
+
+    environment:
+      <<: *common-env
+      SE_EVENT_BUS_HOST: selenium-hub
+      SE_EVENT_BUS_PUBLISH_PORT: "4442"
+      SE_EVENT_BUS_SUBSCRIBE_PORT: "4443"
+      SE_NODE_MAX_SESSIONS: "1"
+      SE_VNC_NO_PASSWORD: "true"
+      # SE_VNC_PASSWORD: "${GRID_VNC_PASSWORD:-secret}"
+
+    networks:
+      - qa-infra
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+networks:
+  qa-infra:
+    external: true
+    name: qa-infra-net
