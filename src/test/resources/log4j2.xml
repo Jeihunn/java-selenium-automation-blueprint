@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" shutdownHook="disable">
+    <Properties>
+        <!-- Base directory for log files -->
+        <Property name="LOG_DIR">${sys:log.dir:-target/logs}</Property>
+
+        <!-- Default root logging level -->
+        <Property name="ROOT_LEVEL">${sys:log.level:-info}</Property>
+
+        <Property name="CONSOLE_PATTERN">
+            %highlight{[%level]}{INFO=blue,WARN=yellow,ERROR=red,FATAL=red} [%t] [%c] - %msg%n
+        </Property>
+
+        <!-- Common file log format -->
+        <Property name="FILE_PATTERN">
+            %d{[yyyy-MM-dd HH:mm:ss.SSS]} [%level] [%t] [%c] - %msg%n
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Console output -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="${CONSOLE_PATTERN}"/>
+        </Console>
+
+        <!-- File output with rolling policy -->
+        <RollingFile
+                name="File"
+                fileName="${LOG_DIR}/automation.log"
+                filePattern="${LOG_DIR}/automation-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout charset="UTF-8" pattern="${FILE_PATTERN}"/>
+
+            <!-- Rotation rules -->
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+
+            <!-- Maximum number of archived files -->
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Async wrapper for all appenders -->
+        <Async name="Async">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <!-- Reduce third-party log noise -->
+        <Logger name="org.openqa.selenium" level="warn" additivity="false">
+            <AppenderRef ref="Async"/>
+        </Logger>
+
+        <!-- Framework-level logging -->
+        <Logger name="io.cucumber" level="info" additivity="false">
+            <AppenderRef ref="Async"/>
+        </Logger>
+
+        <!-- Default logging behavior -->
+        <Root level="${ROOT_LEVEL}">
+            <AppenderRef ref="Async"/>
+        </Root>
+    </Loggers>
+</Configuration>
