@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0;padding:0;background-color:#f4f4f4;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;">
+
+<div style="max-width:600px;margin:20px auto;background-color:#ffffff;border-radius:8px;overflow:hidden;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+
+    <div style="background-color:#2c3e50;color:#ffffff;padding:40px 20px;text-align:center;
+                border-bottom:4px solid #34495e;">
+
+        <h1 style="margin:0;font-size:26px;font-weight:600;letter-spacing:0.5px;">
+            Test Execution Report
+        </h1>
+
+        <p style="margin:8px 0 25px;font-size:16px;opacity:0.8;font-weight:300;">
+            ${PROJECT_NAME}
+        </p>
+
+        <span style="display:inline-block;
+                     background-color:rgba(255,255,255,0.1);
+                     border:1px solid rgba(255,255,255,0.25);
+                     border-radius:50px;
+                     padding:10px 25px;
+                     font-size:14px;
+                     font-weight:800;
+                     letter-spacing:1.5px;
+                     text-transform:uppercase;
+                     box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+                ● ${BUILD_STATUS}
+            </span>
+
+        <p style="margin:20px 0 0;font-size:12px;color:rgba(255,255,255,0.5);font-style:italic;">
+            🚀 ${BUILD_CAUSE}
+        </p>
+    </div>
+
+    <div style="padding:35px;">
+
+        <p style="color:#555;font-size:15px;line-height:1.6;margin-bottom:25px;text-align:center;">
+            Automated test execution has completed. Results are summarized below.
+        </p>
+
+        <div style="text-align:center; margin-bottom: 30px;">
+
+            <span style="display:inline-block; background-color:#f1f3f5; color:#555;
+                         padding:10px 20px; border-radius:50px; font-size:13px; font-weight:700;
+                         margin: 5px; border: 1px solid #e9ecef;">
+                📦 Build #${BUILD_NUMBER}
+            </span>
+
+            <span style="display:inline-block; background-color:#e3f2fd; color:#1565c0;
+                         padding:10px 20px; border-radius:50px; font-size:13px; font-weight:700;
+                         margin: 5px; border: 1px solid #bbdefb;
+                         text-transform: capitalize;">
+                🌐 ${ENV, var="BROWSER"}
+            </span>
+
+        </div>
+        <div style="background-color:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;
+                    padding:20px;box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+
+            <table style="width:100%;border-collapse:collapse;">
+                <tr>
+                    <td style="padding:12px;font-size:15px;color:#495057;border-bottom:1px solid #eee;">
+                        🧪 Total Tests
+                    </td>
+                    <td style="padding:12px;font-size:15px;font-weight:bold;text-align:right;
+                               color:#212529;border-bottom:1px solid #eee;">
+                        ${TEST_COUNTS, var="total"}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:12px;font-size:15px;color:#27ae60;border-bottom:1px solid #eee;">
+                        ✅ Passed
+                    </td>
+                    <td style="padding:12px;font-size:15px;font-weight:bold;text-align:right;
+                               color:#27ae60;border-bottom:1px solid #eee;">
+                        ${TEST_COUNTS, var="pass"}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:12px;font-size:15px;color:#c0392b;border-bottom:1px solid #eee;">
+                        ❌ Failed
+                    </td>
+                    <td style="padding:12px;font-size:15px;font-weight:bold;text-align:right;
+                               color:#c0392b;border-bottom:1px solid #eee;">
+                        ${TEST_COUNTS, var="fail"}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:12px;font-size:15px;color:#f39c12;">
+                        ⏭️ Skipped
+                    </td>
+                    <td style="padding:12px;font-size:15px;font-weight:bold;text-align:right;
+                               color:#f39c12;">
+                        ${TEST_COUNTS, var="skip"}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="text-align:center;margin-top:35px;">
+            <a href="${BUILD_URL}allure/" style="background-color:#3498db;color:#ffffff;padding:15px 35px;
+                      text-decoration:none;border-radius:6px;font-weight:bold;font-size:15px;
+                      display:inline-block;box-shadow:0 4px 10px rgba(52,152,219,0.3);">
+                📊 View Allure Report
+            </a>
+        </div>
+
+        <div style="margin-top:35px;border-top:1px solid #eee;padding-top:20px;
+                    font-size:12px;text-align:center;">
+            <a href="${BUILD_URL}console" style="color:#7f8c8d;text-decoration:none;margin:0 10px;">
+                Console Output
+            </a>
+            <span style="color:#ccc;">|</span>
+            <a href="${BUILD_URL}" style="color:#7f8c8d;text-decoration:none;margin:0 10px;">
+                Build Details
+            </a>
+        </div>
+
+    </div>
+
+    <div style="background-color:#f1f2f6;padding:15px;text-align:center;
+                border-top:1px solid #e0e0e0;">
+        <p style="margin:0;font-size:11px;color:#bdc3c7;">
+            This is an automated notification from Jenkins. Please do not reply.
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

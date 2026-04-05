@@ -1,0 +1,238 @@
+pipeline {
+
+    /*********************************************************
+     * AGENT
+     *********************************************************/
+    agent any
+
+    /*********************************************************
+     * PARAMETERS
+     *********************************************************/
+    parameters {
+
+        /***********************
+         * BROWSER
+         ***********************/
+        choice(
+            name: 'BROWSER',
+            choices: ['chrome', 'firefox', 'edge'],
+            description: 'Select browser for test execution'
+        )
+
+        booleanParam(
+            name: 'BROWSER_HEADLESS',
+            defaultValue: true,
+            description: 'Run browser in headless mode'
+        )
+
+        /***********************
+         * EXECUTION
+         ***********************/
+        string(
+            name: 'DATAPROVIDER_THREADS',
+            defaultValue: '1',
+            description: 'Parallel test threads (allowed: 1-10)'
+        )
+
+        string(
+            name: 'TEST_TAGS',
+            defaultValue: '',
+            description: '''
+            Defines the Cucumber tag expression to filter test execution.
+            Leave empty to execute the full test suite.
+
+            Supported Syntax:
+            - Single: @smoke
+            - Logic OR: @smoke or @regression
+            - Logic AND: @smoke and @critical
+            - Exclusion: not @wip
+            '''
+        )
+
+        /***********************
+         * RETRY
+         ***********************/
+        booleanParam(
+            name: 'RETRY_ENABLED',
+            defaultValue: true,
+            description: 'Enable retry for failed tests.'
+        )
+
+        string(
+            name: 'RETRY_COUNT',
+            defaultValue: '1',
+            description: 'Maximum retry attempts (applied only if RETRY_ENABLED is true).'
+        )
+
+        /***********************
+         * NOTIFICATION
+         ***********************/
+        string(
+            name: 'EMAIL_RECIPIENTS',
+            defaultValue: 'jeihuntest@gmail.com',
+            description: 'Comma-separated email recipients for automation report'
+        )
+    }
+
+    /*********************************************************
+     * TOOLS
+     *********************************************************/
+    tools {
+        maven 'maven'
+    }
+
+    /*********************************************************
+     * TRIGGERS
+     *********************************************************/
+    triggers {
+        cron('H 2 * * *')
+    }
+
+    /*********************************************************
+     * OPTIONS
+     *********************************************************/
+    options {
+        timestamps()
+        ansiColor('xterm')
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '100'))
+    }
+
+    /*********************************************************
+     * ENVIRONMENT
+     *********************************************************/
+    environment {
+        EXECUTION_MODE = 'grid'
+    }
+
+    /*********************************************************
+     * STAGES
+     *********************************************************/
+    stages {
+
+        stage('Init & Validation') {
+            steps {
+                script {
+                    int threads
+
+                    try {
+                        threads = params.DATAPROVIDER_THREADS.toInteger()
+                    } catch (Exception e) {
+                        currentBuild.result = 'ABORTED'
+                        error 'DATAPROVIDER_THREADS must be a number!'
+                    }
+
+                    if (threads < 1 || threads > 10) {
+                        currentBuild.result = 'ABORTED'
+                        error 'DATAPROVIDER_THREADS must be between 1 and 10'
+                    }
+
+                    currentBuild.displayName =
+                        "#${env.BUILD_NUMBER} | " +
+                        "${env.EXECUTION_MODE} | " +
+                        "${params.BROWSER} | " +
+                        "threads=${threads}"
+                }
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Run Tests') {
+            options {
+                timeout(time: 180, unit: 'MINUTES')
+            }
+            steps {
+                withCredentials([
+                    file(credentialsId: 'automation-env-file', variable: 'ENV_FILE')
+                ]) {
+                    sh """
+                      cp "$ENV_FILE" .env
+                      trap 'rm -f .env' EXIT
+
+                      mvn -Dstyle.color=always \
+                          clean test \
+                          -Dexecution.mode=${EXECUTION_MODE} \
+                          -Dbrowser=${params.BROWSER} \
+                          -Dbrowser.headless=${params.BROWSER_HEADLESS} \
+                          -Dcucumber.filter.tags='${params.TEST_TAGS}' \
+                          -Ddataproviderthreadcount=${params.DATAPROVIDER_THREADS} \
+                          -Dretry.enabled=${params.RETRY_ENABLED} \
+                          -Dretry.count=${params.RETRY_COUNT}
+                    """
+                }
+            }
+        }
+    }
+
+    /*********************************************************
+     * POST ACTIONS
+     *********************************************************/
+    post {
+
+        always {
+            script {
+
+                /* -----------------------------
+                 * JUNIT REPORTS
+                 * ----------------------------- */
+                if (fileExists('target/surefire-reports')) {
+
+                    echo '📊 JUnit report directory found. Publishing test results...'
+
+                    junit(
+                        allowEmptyResults: true,
+                        testResults: '**/target/surefire-reports/*.xml'
+                    )
+
+                } else {
+                    echo '⚠️ JUnit report directory not found. Skipping JUnit publish.'
+                }
+
+                /* -----------------------------
+                 * ALLURE REPORTS
+                 * ----------------------------- */
+                if (fileExists('target/allure-results')) {
+
+                    echo '🧪 Allure results found. Publishing Allure report...'
+
+                    allure(
+                        results: [[path: 'target/allure-results']],
+                        reportBuildPolicy: 'ALWAYS'
+                    )
+
+                } else {
+                    echo '⚠️ Allure results not found. Skipping Allure publish.'
+                }
+            }
+        }
+
+        success {
+            script {
+                sendAutomationReportMail()
+            }
+        }
+
+        failure {
+            script {
+                sendAutomationReportMail()
+            }
+        }
+    }
+}
+
+/*********************************************************
+ * HELPER FUNCTIONS
+ *********************************************************/
+def sendAutomationReportMail() {
+    emailext(
+        to: params.EMAIL_RECIPIENTS,
+        subject: "Automation Report | ${env.JOB_BASE_NAME}",
+        mimeType: 'text/html',
+        body: '${FILE,path="jenkins/email-template.html"}'
+    )
+}

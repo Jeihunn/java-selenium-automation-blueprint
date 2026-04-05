@@ -1,0 +1,62 @@
+services:
+  jenkins:
+    build: .
+    image: jenkins-utf8:lts-jdk21
+    restart: unless-stopped
+    user: root
+    mem_limit: 3g
+    mem_reservation: 1g
+    cpus: "2.0"
+
+    ports:
+      - "8080:8080" # Jenkins Web UI
+      - "50000:50000" # Agent communication
+
+    environment:
+      TZ: Asia/Baku
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      JAVA_TOOL_OPTIONS: >
+        -Dfile.encoding=UTF-8
+        -Duser.timezone=Asia/Baku
+      JAVA_OPTS: >
+        -Xms512m
+        -Xmx2048m
+        -XX:+UseG1GC
+        -XX:+HeapDumpOnOutOfMemoryError
+
+    volumes:
+      # Jenkins home (jobs, plugins, config)
+      - jenkins_home:/var/jenkins_home
+      # Maven local repository cache
+      - maven_cache:/root/.m2
+      # Docker access from Jenkins
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      - qa-infra
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8080/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  jenkins_home:
+    name: jenkins_home_data
+
+  maven_cache:
+    name: jenkins_maven_cache
+
+networks:
+  qa-infra:
+    external: true
+    name: qa-infra-net
