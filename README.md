@@ -240,6 +240,10 @@ Secret placeholders inside JSON are supported:
 
 ## Report Preview
 
+Review the Allure test report here:
+
+[Live Allure Report](http://jeihunn.github.io/java-selenium-automation-blueprint/)
+
 ![Allure Report - Suite View](docs/images/allure-report-suite-view.png)
 
 ## Notes
