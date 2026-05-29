@@ -31,56 +31,7 @@ This repository is designed as a maintainable and reusable test automation found
 
 ## Visual Overview
 
-```mermaid
-flowchart LR
-    subgraph Spec["Test Specification"]
-        A["Feature Files"]
-        B["Step Definitions"]
-        A --> B
-    end
-
-    subgraph Framework["Framework Core"]
-        C["Page Objects"]
-        D["UI Components"]
-        E["Driver Layer"]
-        F["Configuration"]
-        G["Test Data"]
-        H["Hooks"]
-        I["Reporting"]
-        J["Retry"]
-    end
-
-    subgraph Execution["Execution Targets"]
-        K["Local Browser"]
-        L["Selenium Grid"]
-    end
-
-    B --> C
-    B --> D
-    B --> G
-    B --> H
-    B --> I
-    B --> J
-
-    C --> E
-    D --> E
-    F --> E
-    G --> B
-    H --> E
-    E --> K
-    E --> L
-    I --> M["Allure Results"]
-
-    classDef spec fill:#eef6ff,stroke:#1d4ed8,stroke-width:1.5px,color:#0f172a;
-    classDef core fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a;
-    classDef exec fill:#f0fdf4,stroke:#15803d,stroke-width:1.5px,color:#0f172a;
-    classDef output fill:#fff7ed,stroke:#ea580c,stroke-width:1.5px,color:#0f172a;
-
-    class A,B spec;
-    class C,D,E,F,G,H,I,J core;
-    class K,L exec;
-    class M output;
-```
+![Visual Overview](docs/images/visual-overview.png)
 
 ## Tech Stack
 
