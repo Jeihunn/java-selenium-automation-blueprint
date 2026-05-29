@@ -61,7 +61,7 @@ pipeline {
         string(
             name: 'RETRY_COUNT',
             defaultValue: '1',
-            description: 'Maximum retry attempts (applied only if RETRY_ENABLED is true).'
+            description: 'Retry attempts (allowed: 0-5, applied only if RETRY_ENABLED is true).'
         )
 
         /***********************
