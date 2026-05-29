@@ -95,7 +95,11 @@ pipeline {
         timestamps()
         ansiColor('xterm')
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '100'))
+        buildDiscarder(logRotator(
+            numToKeepStr: '50',
+            artifactNumToKeepStr: '10'
+        ))
+        skipDefaultCheckout(true)
     }
 
     /*********************************************************
@@ -113,18 +117,17 @@ pipeline {
         stage('Init & Validation') {
             steps {
                 script {
-                    int threads
-
-                    try {
-                        threads = params.DATAPROVIDER_THREADS.toInteger()
-                    } catch (Exception e) {
-                        currentBuild.result = 'ABORTED'
-                        error 'DATAPROVIDER_THREADS must be a number!'
-                    }
+                    int threads = parseNumberParam('DATAPROVIDER_THREADS', params.DATAPROVIDER_THREADS)
+                    int retryCount = parseNumberParam('RETRY_COUNT', params.RETRY_COUNT)
 
                     if (threads < 1 || threads > 10) {
                         currentBuild.result = 'ABORTED'
                         error 'DATAPROVIDER_THREADS must be between 1 and 10'
+                    }
+
+                    if (retryCount < 0 || retryCount > 5) {
+                        currentBuild.result = 'ABORTED'
+                        error 'RETRY_COUNT must be between 0 and 5'
                     }
 
                     currentBuild.displayName =
@@ -150,20 +153,38 @@ pipeline {
                 withCredentials([
                     file(credentialsId: 'automation-env-file', variable: 'ENV_FILE')
                 ]) {
-                    sh """
-                      cp "$ENV_FILE" .env
-                      trap 'rm -f .env' EXIT
+                    sh(
+                        label: 'Run Maven UI tests',
+                        script: '#!/usr/bin/env bash\n' + '''
+                            set -euo pipefail
 
-                      mvn -Dstyle.color=always \
-                          clean test \
-                          -Dexecution.mode=${EXECUTION_MODE} \
-                          -Dbrowser=${params.BROWSER} \
-                          -Dbrowser.headless=${params.BROWSER_HEADLESS} \
-                          -Dcucumber.filter.tags='${params.TEST_TAGS}' \
-                          -Ddataproviderthreadcount=${params.DATAPROVIDER_THREADS} \
-                          -Dretry.enabled=${params.RETRY_ENABLED} \
-                          -Dretry.count=${params.RETRY_COUNT}
-                    """
+                            cp "$ENV_FILE" .env
+                            trap 'rm -f .env' EXIT
+
+                            command=(
+                              mvn
+                              -Dstyle.color=always
+                              clean
+                              test
+                              "-Dexecution.mode=${EXECUTION_MODE}"
+                              "-Dbrowser=${BROWSER}"
+                              "-Dbrowser.headless=${BROWSER_HEADLESS}"
+                              "-Ddataproviderthreadcount=${DATAPROVIDER_THREADS}"
+                              "-Dretry.enabled=${RETRY_ENABLED}"
+                              "-Dretry.count=${RETRY_COUNT}"
+                            )
+
+                            if [[ -n "${TEST_TAGS}" ]]; then
+                              command+=("-Dcucumber.filter.tags=${TEST_TAGS}")
+                            fi
+
+                            printf 'Executing command:'
+                            printf ' %q' "${command[@]}"
+                            printf '\\n'
+
+                            "${command[@]}"
+                        '''.stripIndent()
+                    )
                 }
             }
         }
@@ -228,7 +249,21 @@ pipeline {
 /*********************************************************
  * HELPER FUNCTIONS
  *********************************************************/
+int parseNumberParam(String name, String value) {
+    try {
+        return value.toInteger()
+    } catch (Exception ignored) {
+        currentBuild.result = 'ABORTED'
+        error "${name} must be a number."
+    }
+}
+
 def sendAutomationReportMail() {
+    if (!params.EMAIL_RECIPIENTS?.trim()) {
+        echo 'EMAIL_RECIPIENTS is empty. Skipping email notification.'
+        return
+    }
+
     emailext(
         to: params.EMAIL_RECIPIENTS,
         subject: "Automation Report | ${env.JOB_BASE_NAME}",
