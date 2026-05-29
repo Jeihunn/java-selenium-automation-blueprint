@@ -53,13 +53,13 @@ http://localhost:8080
 
 ## Supported Parameters
 
-- `BROWSER`: `chrome`, `firefox`, `edge`
+- `BROWSER`: selected browser for test execution: `chrome`, `firefox`, or `edge`
 - `BROWSER_HEADLESS`: runs the browser in headless mode when enabled
 - `DATAPROVIDER_THREADS`: parallel test thread count, validated between `1` and `10`
-- `TEST_TAGS`: Cucumber tag expression
+- `TEST_TAGS`: Cucumber tag expression; leave empty to run the full suite
 - `RETRY_ENABLED`: enables retry logic for failed tests
-- `RETRY_COUNT`: maximum retry attempts
-- `EMAIL_RECIPIENTS`: comma-separated recipient list for the execution summary
+- `RETRY_COUNT`: retry attempt count, validated between `0` and `5`; applied only if `RETRY_ENABLED` is enabled
+- `EMAIL_RECIPIENTS`: comma-separated recipient list for the execution summary; if left blank, email notification is skipped
 
 ## Required Credentials
 
