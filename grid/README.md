@@ -101,6 +101,18 @@ View service logs:
 docker compose --env-file .env -f grid/docker-compose.yml logs -f
 ```
 
+Scale multiple browser node types for higher parallel capacity:
+
+```powershell
+docker compose --env-file .env -f grid/docker-compose.yml up -d --scale chrome-node=2 --scale firefox-node=2 --scale edge-node=1
+```
+
+If you only need more Chrome capacity, scale just the Chrome nodes:
+
+```powershell
+docker compose --env-file .env -f grid/docker-compose.yml up -d --scale chrome-node=3
+```
+
 ## Troubleshooting
 
 - If the containers do not start, verify that `qa-infra-net` exists before running `docker compose up`.

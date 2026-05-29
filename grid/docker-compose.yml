@@ -3,7 +3,7 @@ x-common-env: &common-env
 
 services:
   selenium-hub:
-    image: selenium/hub:4.40.0-20260120
+    image: selenium/hub:4.44.0-20260505
     restart: unless-stopped
 
     ports:
@@ -37,7 +37,7 @@ services:
         max-file: "5"
 
   chrome-node:
-    image: selenium/node-chrome:4.40.0-20260120
+    image: selenium/node-chrome:4.44.0-20260505
     restart: unless-stopped
     shm_size: 2gb
     mem_limit: 2g
@@ -66,7 +66,7 @@ services:
         max-file: "5"
 
   firefox-node:
-    image: selenium/node-firefox:4.40.0-20260120
+    image: selenium/node-firefox:4.44.0-20260505
     restart: unless-stopped
     shm_size: 2gb
     mem_limit: 2g
@@ -95,7 +95,7 @@ services:
         max-file: "5"
 
   edge-node:
-    image: selenium/node-edge:4.40.0-20260120
+    image: selenium/node-edge:4.44.0-20260505
     restart: unless-stopped
     shm_size: 2gb
     mem_limit: 2g
