@@ -167,15 +167,15 @@ pipeline {
                               clean
                               test
                               "-Dexecution.mode=${EXECUTION_MODE}"
-                              "-Dbrowser=${BROWSER}"
-                              "-Dbrowser.headless=${BROWSER_HEADLESS}"
-                              "-Ddataproviderthreadcount=${DATAPROVIDER_THREADS}"
-                              "-Dretry.enabled=${RETRY_ENABLED}"
-                              "-Dretry.count=${RETRY_COUNT}"
+                              "-Dbrowser=${params.BROWSER}"
+                              "-Dbrowser.headless=${params.BROWSER_HEADLESS}"
+                              "-Ddataproviderthreadcount=${params.DATAPROVIDER_THREADS}"
+                              "-Dretry.enabled=${params.RETRY_ENABLED}"
+                              "-Dretry.count=${params.RETRY_COUNT}"
                             )
 
-                            if [[ -n "${TEST_TAGS}" ]]; then
-                              command+=("-Dcucumber.filter.tags=${TEST_TAGS}")
+                            if [[ -n "${params.TEST_TAGS}" ]]; then
+                              command+=("-Dcucumber.filter.tags=${params.TEST_TAGS}")
                             fi
 
                             printf 'Executing command:'
