@@ -155,40 +155,39 @@ pipeline {
                 ]) {
                     sh(
                         label: 'Run Maven UI tests',
-                        script: '#!/usr/bin/env bash\n' + '''
+                        script: """#!/usr/bin/env bash
                             set -euo pipefail
 
-                            cp "$ENV_FILE" .env
+                            cp "\$ENV_FILE" .env
                             trap 'rm -f .env' EXIT
 
                             command=(
-                              mvn
-                              -Dstyle.color=always
-                              clean
-                              test
-                              "-Dexecution.mode=${EXECUTION_MODE}"
-                              "-Dbrowser=${params.BROWSER}"
-                              "-Dbrowser.headless=${params.BROWSER_HEADLESS}"
-                              "-Ddataproviderthreadcount=${params.DATAPROVIDER_THREADS}"
-                              "-Dretry.enabled=${params.RETRY_ENABLED}"
-                              "-Dretry.count=${params.RETRY_COUNT}"
+                            mvn
+                            -Dstyle.color=always
+                            clean
+                            test
+                            "-Dexecution.mode=${EXECUTION_MODE}"
+                            "-Dbrowser=${params.BROWSER}"
+                            "-Dbrowser.headless=${params.BROWSER_HEADLESS}"
+                            "-Ddataproviderthreadcount=${params.DATAPROVIDER_THREADS}"
+                            "-Dretry.enabled=${params.RETRY_ENABLED}"
+                            "-Dretry.count=${params.RETRY_COUNT}"
                             )
 
                             if [[ -n "${params.TEST_TAGS}" ]]; then
-                              command+=("-Dcucumber.filter.tags=${params.TEST_TAGS}")
+                            command+=("-Dcucumber.filter.tags=${params.TEST_TAGS}")
                             fi
 
                             printf 'Executing command:'
-                            printf ' %q' "${command[@]}"
+                            printf ' %q' "\${command[@]}"
                             printf '\\n'
 
-                            "${command[@]}"
-                        '''.stripIndent()
+                            "\${command[@]}"
+                        """.stripIndent()
                     )
                 }
             }
         }
-    }
 
     /*********************************************************
      * POST ACTIONS
