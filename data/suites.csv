@@ -1,50 +1,52 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
 "  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5386","The user can add multiple products to the cart","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user can add multiple products to the cart",""
-"  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5149","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
-"  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5192","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
-"  The system should handle both successful and unsuccessful login attempts correctly.","4802","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
-"  The system should handle both successful and unsuccessful login attempts correctly.","4798","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
+  sort the product list, and log out from the inventory page.","4257","Intentionally failing scenario for soft assertion validation","","2026-05-30","failed","2026-05-30","","Inventory page functionality","Intentionally failing scenario for soft assertion validation",""
+"  The system should handle both successful and unsuccessful login attempts correctly.","1772","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
 "  The user should be able to review the cart, verify added products,
   remove products from the cart, and return to the inventory page
-  through different navigation paths.","12605","The user can remove a product directly from the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can remove a product directly from the cart",""
+  through different navigation paths.","2178","The user can continue shopping from the cart page","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can continue shopping from the cart page",""
+"  The system should handle both successful and unsuccessful login attempts correctly.","1398","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
 "  The user should be able to review the cart, verify added products,
   remove products from the cart, and return to the inventory page
-  through different navigation paths.","5377","The user can return to the inventory page from the sidebar menu","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can return to the inventory page from the sidebar menu",""
+  through different navigation paths.","2421","The user can return to the inventory page from the sidebar menu","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can return to the inventory page from the sidebar menu",""
+"  The system should handle both successful and unsuccessful login attempts correctly.","1814","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
 "  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","6954","The user completes the order successfully with valid checkout information","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The user completes the order successfully with valid checkout information",""
+  summary, and complete the purchase successfully.","2376","The Cancel button on the checkout information page returns the user to the cart","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The Cancel button on the checkout information page returns the user to the cart",""
+"  The user should be able to enter checkout information, review the order
+  summary, and complete the purchase successfully.","3812","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
 "  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5233","The user logs out successfully","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user logs out successfully",""
-"  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","6162","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
-"  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","5666","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
-"  The system should handle both successful and unsuccessful login attempts correctly.","5058","A standard user logs in successfully","","2026-05-30","passed","2026-05-30","","Login functionality","A standard user logs in successfully",""
-"  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","5678","The checkout overview displays the correct products and totals","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The checkout overview displays the correct products and totals",""
-"  The system should handle both successful and unsuccessful login attempts correctly.","5124","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
-"  The user should be able to review the cart, verify added products,
-  remove products from the cart, and return to the inventory page
-  through different navigation paths.","12557","Added products are displayed correctly in the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","Added products are displayed correctly in the cart",""
-"  The user should be able to review the cart, verify added products,
-  remove products from the cart, and return to the inventory page
-  through different navigation paths.","5444","The user can proceed to the checkout information page from the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can proceed to the checkout information page from the cart",""
+  sort the product list, and log out from the inventory page.","2609","The user logs out successfully","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user logs out successfully",""
+"  The system should handle both successful and unsuccessful login attempts correctly.","1407","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
 "  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5203","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+  sort the product list, and log out from the inventory page.","1990","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+"  The user should be able to add products to the cart, remove them,
+  sort the product list, and log out from the inventory page.","2568","The user can remove all added products from the cart","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user can remove all added products from the cart",""
+"  The user should be able to add products to the cart, remove them,
+  sort the product list, and log out from the inventory page.","1952","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+"  The user should be able to add products to the cart, remove them,
+  sort the product list, and log out from the inventory page.","2156","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+"  The user should be able to enter checkout information, review the order
+  summary, and complete the purchase successfully.","3191","The checkout overview displays the correct products and totals","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The checkout overview displays the correct products and totals",""
 "  The user should be able to review the cart, verify added products,
   remove products from the cart, and return to the inventory page
-  through different navigation paths.","5580","The user can continue shopping from the cart page","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can continue shopping from the cart page",""
-"  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","5866","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
-"  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5211","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+  through different navigation paths.","24060","The empty cart state is displayed correctly","","2026-05-30","passed","2026-05-30","","Cart page functionality","The empty cart state is displayed correctly",""
 "  The user should be able to review the cart, verify added products,
   remove products from the cart, and return to the inventory page
-  through different navigation paths.","5208","The empty cart state is displayed correctly","","2026-05-30","passed","2026-05-30","","Cart page functionality","The empty cart state is displayed correctly",""
+  through different navigation paths.","2222","The user can proceed to the checkout information page from the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can proceed to the checkout information page from the cart",""
+"  The system should handle both successful and unsuccessful login attempts correctly.","1633","A standard user logs in successfully","","2026-05-30","passed","2026-05-30","","Login functionality","A standard user logs in successfully",""
+"  The user should be able to review the cart, verify added products,
+  remove products from the cart, and return to the inventory page
+  through different navigation paths.","24361","Added products are displayed correctly in the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","Added products are displayed correctly in the cart",""
 "  The user should be able to add products to the cart, remove them,
-  sort the product list, and log out from the inventory page.","5716","The user can remove all added products from the cart","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user can remove all added products from the cart",""
-"  The system should handle both successful and unsuccessful login attempts correctly.","4934","Appropriate error messages are shown for invalid login attempts","","2026-05-30","passed","2026-05-30","","Login functionality","Appropriate error messages are shown for invalid login attempts",""
+  sort the product list, and log out from the inventory page.","1933","Products are sorted correctly for the selected sort option","","2026-05-30","passed","2026-05-30","","Inventory page functionality","Products are sorted correctly for the selected sort option",""
+"  The user should be able to review the cart, verify added products,
+  remove products from the cart, and return to the inventory page
+  through different navigation paths.","24564","The user can remove a product directly from the cart","","2026-05-30","passed","2026-05-30","","Cart page functionality","The user can remove a product directly from the cart",""
 "  The user should be able to enter checkout information, review the order
-  summary, and complete the purchase successfully.","5568","The Cancel button on the checkout information page returns the user to the cart","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The Cancel button on the checkout information page returns the user to the cart",""
+  summary, and complete the purchase successfully.","2897","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
+"  The user should be able to add products to the cart, remove them,
+  sort the product list, and log out from the inventory page.","2213","The user can add multiple products to the cart","","2026-05-30","passed","2026-05-30","","Inventory page functionality","The user can add multiple products to the cart",""
+"  The user should be able to enter checkout information, review the order
+  summary, and complete the purchase successfully.","3815","Appropriate error messages are shown when checkout information is incomplete","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","Appropriate error messages are shown when checkout information is incomplete",""
+"  The user should be able to enter checkout information, review the order
+  summary, and complete the purchase successfully.","4677","The user completes the order successfully with valid checkout information","","2026-05-30","passed","2026-05-30","","Checkout flow functionality","The user completes the order successfully with valid checkout information",""
