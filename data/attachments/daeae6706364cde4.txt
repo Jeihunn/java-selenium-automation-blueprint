@@ -1,3 +1,0 @@
-[First product price on the inventory page is incorrect] 
-expected: 299.99
- but was: 29.99

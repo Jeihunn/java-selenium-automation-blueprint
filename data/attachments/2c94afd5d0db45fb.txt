@@ -1,3 +1,0 @@
-[First product name on the inventory page is incorrect] 
-expected: "Sauce Labs Backpackgg"
- but was: "Sauce Labs Backpack"
