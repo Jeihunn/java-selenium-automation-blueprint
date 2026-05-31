@@ -197,6 +197,12 @@ Review the Allure test report here:
 
 ![Allure Report - Suite View](docs/images/allure-report-suite-view.png)
 
+## Video Walkthrough
+
+Watch a short walkthrough of the framework running locally, on Selenium Grid, and via Jenkins:
+
+[![Watch the demo on YouTube](https://img.youtube.com/vi/s2wp2k0PZvA/maxresdefault.jpg)](https://youtu.be/s2wp2k0PZvA?si=6EAvlplTLlujcWC0)
+
 ## Notes
 
 - This repository is a blueprint, not a product-specific automation framework.
